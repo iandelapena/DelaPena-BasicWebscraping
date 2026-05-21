@@ -1,9 +1,11 @@
 import json
 import csv
 from datetime import datetime, timedelta
+from pathlib import Path
 
 # 1. Load the intercepted JSON data
-with open(r'C:\Users\user\Documents\DelaPeñaJoseBrian_Basic-Webscraping\starlink_data.json', 'r') as file:
+json_file = Path(__file__).parent / 'starlink_data.json'
+with open(json_file, 'r') as file:
     payload = json.load(file)
 
 extracted_rows = []
