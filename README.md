@@ -1,34 +1,32 @@
-# 🎮 Starink Webscraping
+# 📊 Starlink Data Usage Scraper
 
-A Python-based web scraper that collects game information from **PCGamingWiki** using **Playwright** and **BeautifulSoup**.
+A Python tool that extracts **Starlink internet usage data** from saved HTML reports and converts it into a clean CSV file.
 
-The scraper:
-- 📂 Fetches game subcategories
-- 🎯 Extracts game pages from each subcategory
-- 🧠 Scrapes key data:
-  - 🏷️ Title
-  - 👨‍💻 Developer
-  - 🏢 Publisher
-  - 🎮 Genre
-  - 🖥️ Platform release dates
-- 📊 Exports results into a clean HTML table
+It automatically:
+- 📂 Detects HTML files in the folder
+- 🧾 Lets you choose which file to process
+- 📊 Extracts usage bar data from the Starlink dashboard UI
+- 📅 Detects billing cycle start date
+- 📈 Converts pixel values into GB usage estimates
+- 💾 Exports results into CSV format
 
 ---
 
 ## ✨ Features
 
-- 🌐 Browser automation with Playwright
-- 🧾 HTML parsing using BeautifulSoup
-- ⚡ Dynamic page rendering support
-- 📄 HTML report generation
-- 🔧 Easy to customize and extend
+- 🗂️ Auto-detects `.html` usage files
+- 🧠 Parses Starlink dashboard HTML reports
+- 📊 Converts bar chart heights into estimated GB usage
+- 📅 Auto-detects billing cycle start date
+- 💾 Outputs clean `data_usage.csv`
+- ⚡ Simple command-line interface
 
 ---
 
 ## 🧰 Requirements
 
 - 🐍 Python 3.9+
-- 🌍 Chromium browser (installed via Playwright)
+- 📦 BeautifulSoup4
 
 ---
 
@@ -37,8 +35,8 @@ The scraper:
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/starink-webscraping.git
-cd starink-webscraping
+git clone https://github.com/yourusername/starlink-data-scraper.git
+cd starlink-data-scraper
 ```
 
 ### 2. Install dependencies
@@ -47,93 +45,76 @@ cd starink-webscraping
 pip install -r requirements.txt
 ```
 
-### 3. Install Playwright browsers
-
-```bash
-playwright install
-```
-
 ---
 
 ## 🚀 Usage
 
-Run the scraper:
+### Step 1: Add your Starlink HTML report(s)
+Place your exported **Starlink usage `.html` files** in the same folder as the script.
+
+### Step 2: Run the script
 
 ```bash
 python scraper.py
 ```
 
-After execution, results will be saved as:
+### Step 3: Select file
 
-```bash
-📄 SCRAPE_RESULTS.html
+Example prompt:
+
+```
+Found the following files:
+[1] starlink_report.html
+[2] usage.html
 ```
 
----
-
-## 📊 Example Output
-
-| 📂 Subcategory | 🏷️ Title | 👨‍💻 Developer | 🏢 Publisher | 🎮 Genre | 🖥️ Platforms |
-|---|---|---|---|---|---|
-| Action games | Example Game | Example Dev | Example Publisher | FPS | Windows: 2020 |
+Enter the number of the file you want to process.
 
 ---
 
-## 🗂️ Project Structure
+## 📁 Output
+
+After execution, the script generates:
 
 ```text
-.
-├── 🐍 scraper.py
-├── 📦 requirements.txt
-├── 📘 README.md
-└── 📄 SCRAPE_RESULTS.html
+📄 data_usage.csv
 ```
+
+### Example:
+
+| Date | Data Usage (GB) |
+|------|-----------------|
+| 05/17/2026 | 3.42 |
+| 05/18/2026 | 4.10 |
 
 ---
 
 ## ⚙️ How It Works
 
-### 1. 📂 Fetch Category Pages
-Uses Playwright to load dynamic pages from PCGamingWiki.
+### 1. 📂 File Detection
+Scans directory for `.html` files.
 
-### 2. 🧭 Extract Subcategories
-Collects links from:
-- `#mw-subcategories`
+### 2. 🧾 HTML Parsing
+Uses BeautifulSoup to extract:
+- Total Starlink data usage
+- Bar chart elements from dashboard
 
-### 3. 🎯 Extract Games
-Collects game links from:
-- `#mw-pages`
+### 3. 📊 Data Conversion
+Converts pixel bar heights into GB values using proportional scaling.
 
-### 4. 🧠 Scrape Game Information
-Extracts structured data from:
-- `#infobox-game`
+### 4. 📅 Billing Cycle Detection
+Attempts to detect Starlink billing cycle start date (default: 17th of month).
 
-### 5. 📊 Export Results
-Generates a clean HTML report for viewing.
-
----
-
-## 🛠️ Configuration
-
-### 🎮 Change number of games scraped
-
-```python
-game_links = get_games_from_subcategory(sub_url, limit=5)
-```
-
-### 📂 Change number of subcategories scraped
-
-```python
-for sub_name, sub_url in subcategories[:1]:
-```
+### 5. 💾 CSV Export
+Exports structured daily usage into `data_usage.csv`.
 
 ---
 
 ## ⚠️ Notes
 
-- ⏳ Add delays responsibly to avoid rate limiting
-- 🔄 Website structure may change over time
-- 🎓 Intended for educational and research purposes
+- 📌 Works with Starlink dashboard HTML exports only
+- 📉 Accuracy depends on UI structure consistency
+- 🔄 If Starlink updates their UI, selectors may need adjustments
 
 ---
 
