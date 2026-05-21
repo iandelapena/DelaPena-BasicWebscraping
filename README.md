@@ -1,4 +1,4 @@
-# Starlink Daily Usage Extractor
+# Starlink Daily Usage Scarper
 
 ## Overview
 
