@@ -1,4 +1,4 @@
-# Starlink Daily Usage Extractor
+# Starlink Daily Usage Scraper
 
 This system extracts daily internet usage data from Starlink billing responses and converts it into a clean CSV report for easy tracking and analysis. It works by inspecting the Starlink account network traffic in the browser, copying the `billingCyclesAnnotated` JSON response, and processing the daily usage values with Python. The generated CSV file can be opened in Excel, Google Sheets, or any spreadsheet application to monitor bandwidth usage over time.
 
