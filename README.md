@@ -89,7 +89,3 @@ python script_name.py
 - Dates are derived from the billing cycle start date.
 
 ---
-
-## License
-
-For personal or educational use.
