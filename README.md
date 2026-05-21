@@ -34,10 +34,8 @@ F12
 4. Open the:
 
 ```text
-Network
+Network and go to Fetch/XHR
 ```
-
-tab
 
 5. Refresh the page
 
