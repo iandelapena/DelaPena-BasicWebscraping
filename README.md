@@ -1,36 +1,37 @@
-# 📊 Starlink Data Usage Scraper
+# Starlink Data Usage Scraper
 
 A Python tool that extracts **Starlink internet usage data** from saved HTML reports and converts it into a clean CSV file.
 
 It automatically:
-- 📂 Detects HTML files in the folder
-- 🧾 Lets you choose which file to process
-- 📊 Extracts usage bar data from the Starlink dashboard UI
-- 📅 Detects billing cycle start date
-- 📈 Converts pixel values into GB usage estimates
-- 💾 Exports results into CSV format
+- Detects HTML files in the folder
+- Lets you choose which file to process
+- Extracts usage bar data from the Starlink dashboard UI
+- Detects billing cycle start date
+- Converts pixel values into GB usage estimates
+- Exports results into CSV format
 
 ---
 
-## ✨ Features
+## Features
 
-- 🗂️ Auto-detects `.html` usage files
-- 🧠 Parses Starlink dashboard HTML reports
-- 📊 Converts bar chart heights into estimated GB usage
-- 📅 Auto-detects billing cycle start date
-- 💾 Outputs clean `data_usage.csv`
-- ⚡ Simple command-line interface
-
----
-
-## 🧰 Requirements
-
-- 🐍 Python 3.9+
-- 📦 BeautifulSoup4
+- Auto-detects `.html` usage files
+- Parses Starlink dashboard HTML reports
+- Converts bar chart heights into estimated GB usage
+- Auto-detects billing cycle start date
+- Outputs clean `data_usage.csv`
+- Simple command-line interface
 
 ---
 
-## 📦 Installation
+## Requirements
+
+- Python 3.9+
+- BeautifulSoup4
+- lxml
+
+---
+
+## Installation
 
 ### 1. Clone the repository
 
@@ -47,7 +48,7 @@ pip install -r requirements.txt
 
 ---
 
-## 🚀 Usage
+## Usage
 
 ### Step 1: Add your Starlink HTML report(s)
 Place your exported **Starlink usage `.html` files** in the same folder as the script.
@@ -72,12 +73,12 @@ Enter the number of the file you want to process.
 
 ---
 
-## 📁 Output
+## Output
 
 After execution, the script generates:
 
 ```text
-📄 data_usage.csv
+data_usage.csv
 ```
 
 ### Example:
@@ -89,35 +90,35 @@ After execution, the script generates:
 
 ---
 
-## ⚙️ How It Works
+## How It Works
 
-### 1. 📂 File Detection
+### 1. File Detection
 Scans directory for `.html` files.
 
-### 2. 🧾 HTML Parsing
+### 2. HTML Parsing
 Uses BeautifulSoup to extract:
 - Total Starlink data usage
 - Bar chart elements from dashboard
 
-### 3. 📊 Data Conversion
+### 3. Data Conversion
 Converts pixel bar heights into GB values using proportional scaling.
 
-### 4. 📅 Billing Cycle Detection
+### 4. Billing Cycle Detection
 Attempts to detect Starlink billing cycle start date (default: 17th of month).
 
-### 5. 💾 CSV Export
+### 5. CSV Export
 Exports structured daily usage into `data_usage.csv`.
 
 ---
 
-## ⚠️ Notes
+## Notes
 
-- 📌 Works with Starlink dashboard HTML exports only
-- 📉 Accuracy depends on UI structure consistency
-- 🔄 If Starlink updates their UI, selectors may need adjustments
+- Works with Starlink dashboard HTML exports only
+- Accuracy depends on UI structure consistency
+- If Starlink updates their UI, selectors may need adjustments
 
 ---
 
-## 📜 License
+## License
 
 MIT License
