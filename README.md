@@ -1,91 +1,166 @@
-# Starlink Daily Usage Scarper
+# Starlink Daily Usage Extractor
 
-## Overview
-
-This script processes intercepted Starlink billing data stored in JSON format and converts it into a structured CSV file containing daily internet usage per billing cycle.
-
-It extracts:
-- Date of usage (calculated per day in the billing cycle)
-- Data usage in GB (rounded to 2 decimal places)
-
-The output is saved as a human-readable CSV file.
+This system extracts daily internet usage data from Starlink billing responses and converts it into a clean CSV report for easy tracking and analysis. It works by inspecting the Starlink account network traffic in the browser, copying the `billingCyclesAnnotated` JSON response, and processing the daily usage values with Python. The generated CSV file can be opened in Excel, Google Sheets, or any spreadsheet application to monitor bandwidth usage over time.
 
 ---
 
-## Features
+# 📂 Files
 
-- Parses nested Starlink billing JSON structure
-- Converts billing cycles into daily records
-- Automatically calculates dates using the cycle start date
-- Handles missing or empty usage values safely
-- Outputs clean CSV with headers
-
----
-
-## Requirements
-
-- Python 3.8 or higher
-- No external dependencies (uses only standard library: json, csv, datetime)
+```bash
+project-folder/
+├── starlink_scraper.py
+├── starlink_data.json
+└── starlink_daily_usage.csv
+```
 
 ---
 
-## Input Format
+# 🌐 Step 1 — Get the JSON Data
 
-The script expects a JSON file with a structure like:
+1. Go to:
 
-{
-  "content": {
-    "billingCyclesAnnotated": [
-      {
-        "startDate": "2025-11-17T00:00:00Z",
-        "dailyData": [
-          [1.23],
-          [2.34],
-          []
-        ]
-      }
-    ]
-  }
-}
+```text
+https://www.starlink.com/account/home
+```
+
+2. Log into your account
+
+3. Open Developer Tools:
+
+```bash
+F12
+```
+
+4. Open the:
+
+```text
+Network
+```
+
+tab
+
+5. Refresh the page
+
+6. Search for:
+
+```text
+billing
+```
+
+or:
+
+```text
+annotated
+```
+
+7. Open the request containing:
+
+```text
+billingCyclesAnnotated
+```
+
+8. Open the:
+
+```text
+Response
+```
+
+tab
+
+9. Copy the full JSON response
+
+10. Create a file named:
+
+```bash
+starlink_data.json
+```
+
+11. Paste the JSON into the file
 
 ---
 
-## Configuration
+# 🧠 Step 2 — Create the Script
 
-Update the file path in your script:
+Create:
 
-open(r'C:\Users\user\Documents\DelaPeñaJoseBrian_Basic-Webscraping\starlink_data.json', 'r')
+```bash
+starlink_scraper.py
+```
 
-Or use a relative path:
+Paste:
 
-open('starlink_data.json', 'r')
+```python
+import json
+import csv
+from datetime import datetime, timedelta
+from pathlib import Path
+
+json_file = Path(__file__).parent / 'starlink_data.json'
+
+with open(json_file, 'r') as file:
+    payload = json.load(file)
+
+extracted_rows = []
+
+billing_cycles = payload.get("content", {}).get("billingCyclesAnnotated", [])
+
+for cycle in billing_cycles:
+    start_date_str = cycle.get("startDate").split("T")[0]
+    start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
+
+    daily_usages = cycle.get("dailyData", [])
+
+    for index, usage_wrapper in enumerate(daily_usages):
+        current_day = start_date + timedelta(days=index)
+        current_day_str = current_day.strftime("%Y-%m-%d")
+
+        if usage_wrapper and len(usage_wrapper) > 0:
+            gb_value = round(usage_wrapper[0], 2)
+        else:
+            gb_value = 0.0
+
+        extracted_rows.append([current_day_str, f"{gb_value} GB"])
+
+output_filename = "starlink_daily_usage.csv"
+
+with open(output_filename, "w", newline="", encoding="utf-8") as f:
+    writer = csv.writer(f)
+    writer.writerow(["Date", "Data Usage"])
+    writer.writerows(extracted_rows)
+
+print(f"Generated '{output_filename}' with {len(extracted_rows)} entries.")
+```
 
 ---
 
-## Output
+# ▶️ Step 3 — Run
 
-The script generates:
+```bash
+python starlink_scraper.py
+```
 
+or:
+
+```bash
+python3 starlink_scraper.py
+```
+
+---
+
+# ✅ Output
+
+Creates:
+
+```bash
 starlink_daily_usage.csv
+```
 
-Example output:
+Example:
 
+```csv
 Date,Data Usage
-2025-11-17,1.23 GB
-2025-11-18,2.34 GB
-
----
-
-## How to Run
-
-python script_name.py
-
----
-
-## Notes
-
-- Each billing cycle is expanded into daily entries based on index position.
-- Missing values are stored as 0.0 GB.
-- Dates are derived from the billing cycle start date.
+2025-11-17,12.5 GB
+2025-11-18,10.2 GB
+```
 
 ---
