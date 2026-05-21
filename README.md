@@ -44,22 +44,10 @@ tab
 6. Search for:
 
 ```text
-billing
-```
-
-or:
-
-```text
 annotated
 ```
 
-7. Open the request containing:
-
-```text
-billingCyclesAnnotated
-```
-
-8. Open the:
+7. Open the:
 
 ```text
 Response
@@ -67,15 +55,15 @@ Response
 
 tab
 
-9. Copy the full JSON response
+8. Copy the full JSON response
 
-10. Create a file named:
+9. Create a file named:
 
 ```bash
 starlink_data.json
 ```
 
-11. Paste the JSON into the file
+10. Paste the JSON into the file
 
 ---
 
