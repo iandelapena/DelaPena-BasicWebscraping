@@ -53,8 +53,6 @@ annotated
 Response
 ```
 
-tab
-
 8. Copy the full JSON response
 
 9. Create a file named:
